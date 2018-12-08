@@ -1,0 +1,17 @@
+{
+  "name": "temp_logger",
+  "version": "1.0.0",
+  "description": "App that will output a temperature logging graph",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "knex": "^0.15.2",
+    "pg": "^7.7.1"
+  }
+}
