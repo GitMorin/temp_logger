@@ -7,13 +7,7 @@ const app = express();
 
 
 // let jsonParser = bodyParser.json() Only need this for postReq
-let urlencodedParser = bodyParser.urlencoded({ extended: false })
-
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
+//let urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.use(bodyParser.json())
 app.use(express.static('public'));
 
@@ -67,6 +61,8 @@ app.get('/temp/outdoor/:from/:to', function(req, res){
   })
 })
 
-app.listen(3000, function(){
-  console.log('Server started on port 3000!');
+const port = process.env.PORT || 3000;
+
+app.listen(port, function(){
+  console.log(`Server started on port ${port}!`);
 })
