@@ -24,11 +24,32 @@ var myLineChart = new Chart(ctx, {
         }
       }],
       yAxes: [{
+        position: 'right',
+        ticks: {
+          beginAtZero: false,
+          max: 25,
+          //min: 0,
+          stepSize: 5
+        },
         scaleLabel: {
           display: true,
-          labelString: 'value'
+          labelString: 'Temp C',
         }
-      }]
+      },
+      {
+        position: 'left',
+        ticks: {
+          beginAtZero: false,
+          max: 25,
+          //min: 0,
+          stepSize: 5
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'Temp C',
+        }
+      }
+      ]
     },
   }
 });
