@@ -28,7 +28,7 @@ var myLineChart = new Chart(ctx, {
         ticks: {
           beginAtZero: false,
           max: 25,
-          //min: 0,
+          min: 5,
           stepSize: 5
         },
         scaleLabel: {
@@ -41,7 +41,7 @@ var myLineChart = new Chart(ctx, {
         ticks: {
           beginAtZero: false,
           max: 25,
-          //min: 0,
+          min: 5,
           stepSize: 5
         },
         scaleLabel: {
