@@ -14,7 +14,7 @@ var myLineChart = new Chart(ctx, {
       xAxes: [{
         type: 'time',
         time: {
-          format: timeFormat,
+          parser: timeFormat,
           // round: 'day'
           tooltipFormat: 'll HH:mm'
         },
@@ -33,17 +33,20 @@ var myLineChart = new Chart(ctx, {
   }
 });
 
-// Global chart options
+let temp_room =null;
+let temp_beer =null;
+let temp_outdoor =null;
 
-fetch('http://localhost:3000/temp/room')
+fetch('/temp/room')
 .then(function(response) {
   return response.json();
 })
 .then(function(data) {
+  temp_room = data
   dataset = {
     fill: true,
     label: 'Room temp',
-    data: data,
+    data: temp_room,
     borderColor: 'rgba(51, 42, 207, 0.3)',
     backgroundColor: 'rgba(51, 42, 207, 0.10)',
     pointRadius: .8,
@@ -54,15 +57,16 @@ fetch('http://localhost:3000/temp/room')
   myLineChart.update();
 });
 
-fetch('http://localhost:3000/temp/beer')
+fetch('/temp/beer')
 .then(function(response) {
   return response.json();
 })
 .then(function(data) {
+  temp_beer = data
   dataset = {
     fill: false,
     label: 'Beer temp',
-    data: data,
+    data: temp_beer,
     borderColor: 'rgba(207, 108, 42, 0.75)',
     backgroundColor: 'rgba(161, 84, 33, 0.75)',
     pointRadius: 1,
@@ -73,15 +77,16 @@ fetch('http://localhost:3000/temp/beer')
   myLineChart.update();
 });
 
-fetch('http://localhost:3000/temp/outdoor')
+fetch('/temp/outdoor')
 .then(function(response) {
   return response.json();
 })
 .then(function(data) {
+  temp_outdoor = data
   dataset = {
     fill: true,
     label: 'Outdoor temp',
-    data: data,
+    data: temp_outdoor,
     borderColor: 'rgba(62, 161, 12, 0.9)',    
     backgroundColor: 'rgba(62, 161, 12, 0.1)',
     pointRadius: 0,
@@ -94,77 +99,79 @@ fetch('http://localhost:3000/temp/outdoor')
 
 
 
-// function getDataBetween(){
-//   myLineChart.data.datasets.pop(data);
-// }
+function getDataBetween(from, to){
+  myLineChart.data.datasets.pop(temp_room);
+  myLineChart.data.datasets.pop(temp_beer);
+  myLineChart.data.datasets.pop(temp_outdoor);
+  fetch('/temp/room/' + from + '/' + to)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    dataset = {
+      fill: true,
+      label: 'Room temp',
+      data: data,
+      borderColor: 'rgba(51, 42, 207, 0.3)',
+      backgroundColor: 'rgba(51, 42, 207, 0.10)',
+      pointRadius: .8,
+      borderWidth: .5,
+      pointHitRadius: 7.5,
+    };
+    myLineChart.data.datasets.push(dataset);
+    myLineChart.update();
+  });
 
-//   fetch('http://localhost:3000/temp/room')
-//   .then(function(response) {
-//     return response.json();
-//   })
-//   .then(function(data) {
-//     dataset = {
-//       fill: true,
-//       label: 'Room temp',
-//       data: data,
-//       borderColor: 'rgba(51, 42, 207, 0.3)',
-//       backgroundColor: 'rgba(51, 42, 207, 0.10)',
-//       pointRadius: .8,
-//       borderWidth: .5,
-//       pointHitRadius: 7.5,
-//     };
-//     myLineChart.data.datasets.push(dataset);
-//     myLineChart.update();
-//   });
+  fetch('/temp/beer/' + from + '/' + to)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    dataset = {
+      fill: false,
+      label: 'Beer temp',
+      data: data,
+      borderColor: 'rgba(207, 108, 42, 0.75)',
+      backgroundColor: 'rgba(161, 84, 33, 0.75)',
+      pointRadius: 1,
+      borderWidth: 1.5,
+      pointHitRadius: 7.5
+    };
+    myLineChart.data.datasets.push(dataset);
+    myLineChart.update();
+  });
 
-//   fetch('http://localhost:3000/temp/beer')
-//   .then(function(response) {
-//     return response.json();
-//   })
-//   .then(function(data) {
-//     dataset = {
-//       fill: false,
-//       label: 'Beer temp',
-//       data: data,
-//       borderColor: 'rgba(207, 108, 42, 0.75)',
-//       backgroundColor: 'rgba(161, 84, 33, 0.75)',
-//       pointRadius: 1,
-//       borderWidth: 1.5,
-//       pointHitRadius: 7.5
-//     };
-//     myLineChart.data.datasets.push(dataset);
-//     myLineChart.update();
-//   });
+  fetch('/temp/outdoor/' + from + '/' + to)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    dataset = {
+      fill: true,
+      label: 'Outdoor temp',
+      data: data,
+      borderColor: 'rgba(62, 161, 12, 0.9)',    
+      backgroundColor: 'rgba(62, 161, 12, 0.1)',
+      pointRadius: 0,
+      borderWidth: 1.75,
+      pointHitRadius: 7.5
+    };
+    myLineChart.data.datasets.push(dataset);
+    myLineChart.update();
+  });
+};
 
-//   fetch('http://localhost:3000/temp/outdoor')
-//   .then(function(response) {
-//     return response.json();
-//   })
-//   .then(function(data) {
-//     dataset = {
-//       fill: true,
-//       label: 'Outdoor temp',
-//       data: data,
-//       borderColor: 'rgba(62, 161, 12, 0.9)',    
-//       backgroundColor: 'rgba(62, 161, 12, 0.1)',
-//       pointRadius: 0,
-//       borderWidth: 1.75,
-//       pointHitRadius: 7.5
-//     };
-//     myLineChart.data.datasets.push(dataset);
-//     myLineChart.update();
-//   });
-// };
-
-// $(function() {
-//   $('input[name="daterange"]').daterangepicker({
-//     opens: 'right',
-//     drops: 'up',
-//   }, function(start, end, label) {
-//     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-//     getDataBetween();
-//   });
-// });
+$(function() {
+  $('input[name="daterange"]').daterangepicker({
+    opens: 'right',
+    drops: 'up',
+  }, function(start, end, label) {
+    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+    let from  = start.format('YYYY-MM-DD');
+    let to = end.format('YYYY-MM-DD')
+    getDataBetween(from, to);
+  });
+});
 
 let exampleData = [{
     x: '2018-12-06 03:00:00',
