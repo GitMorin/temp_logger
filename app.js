@@ -9,11 +9,11 @@ const app = express();
 // let jsonParser = bodyParser.json() Only need this for postReq
 let urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 app.use(bodyParser.json())
 app.use(express.static('public'));
 
