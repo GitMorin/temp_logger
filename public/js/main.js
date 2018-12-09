@@ -75,6 +75,10 @@ fetch('/temp/beer')
   };
   myLineChart.data.datasets.push(dataset);
   myLineChart.update();
+  let current_temp = temp_beer[temp_beer.length -1].y;
+  console.log(current_temp);
+  //let current_temp = document.getElementById('current_temp');
+  document.getElementById('current-temp').innerHTML = `Current temp: ${current_temp}`;
 });
 
 fetch('/temp/outdoor')
@@ -137,6 +141,7 @@ function getDataBetween(from, to){
       borderWidth: 1.5,
       pointHitRadius: 7.5
     };
+
     myLineChart.data.datasets.push(dataset);
     myLineChart.update();
   });
