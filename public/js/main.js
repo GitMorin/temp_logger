@@ -58,12 +58,24 @@ let temp_room =null;
 let temp_beer =null;
 let temp_outdoor =null;
 
+let temp_target = [{
+  x: '',
+  y: 20
+}, {
+  x: '',
+  y: 20
+}];
+
 fetch('/temp/room')
 .then(function(response) {
   return response.json();
 })
 .then(function(data) {
   temp_room = data
+  // Set Target temp object
+  temp_target[0].x = data[0].x;
+  temp_target[1].x = data[data.length -1].x;
+  console.log(temp_target);
   dataset = {
     fill: true,
     label: 'Room temp',
@@ -75,6 +87,19 @@ fetch('/temp/room')
     pointHitRadius: 7.5,
   };
   myLineChart.data.datasets.push(dataset);
+  myLineChart.update();
+
+  targetDataset = {
+    fill: false,
+    label: 'Target Temp',
+    data: temp_target,
+    borderColor: 'rgba(255,0,0)',
+    backgroundColor: 'rgba(255,0,0,0)',
+    pointRadius: 0,
+    borderWidth: 1,
+    pointHitRadius: 0,
+  };
+  myLineChart.data.datasets.push(targetDataset);
   myLineChart.update();
 });
 
