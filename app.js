@@ -1,64 +1,13 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-const knex = require('./db/knex');
+const routes = require('./routes/api');
 
 const app = express();
-const startDate = '2018-12-09 18:00'
 
-// let jsonParser = bodyParser.json() Only need this for postReq
-//let urlencodedParser = bodyParser.urlencoded({ extended: false })
-app.use(bodyParser.json())
 app.use(express.static('public'));
+app.use('/api', routes);
 
-// routes
 app.get('/', function(req, res){
   res.file('index.html');
-})
-
-app.get('/temp/room', function(req, res){
-  knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_room where timestamp > ?", [startDate])
-  .then(function(temps){
-    res.json(temps.rows)
-  })
-})
-
-app.get('/temp/beer', function(req, res){
-  knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_beer where timestamp > ?", [startDate])
-  .then(function(temps){
-    res.json(temps.rows)
-  })
-})
-
-app.get('/temp/outdoor', function(req, res){
-  knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_openweather where timestamp > ?", [startDate])
-  .then(function(temps){
-    res.json(temps.rows)
-  })
-})
-
-//'2007-02-07' AND '2007-02-15';
-
-// Between dates
-app.get('/temp/room/:from/:to', function(req, res){
-  knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_room where timestamp BETWEEN ? AND ?", [req.params.from, req.params.to])
-  .then(function(temps){
-    res.json(temps.rows)
-  })
-})
-
-app.get('/temp/beer/:from/:to', function(req, res){
-  knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_beer where timestamp BETWEEN ? AND ?", [req.params.from, req.params.to])
-  .then(function(temps){
-    res.json(temps.rows)
-  })
-})
-
-app.get('/temp/outdoor/:from/:to', function(req, res){
-  knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_openweather where timestamp BETWEEN ? AND ?", [req.params.from, req.params.to])
-  .then(function(temps){
-    res.json(temps.rows)
-  })
 })
 
 const port = process.env.PORT || 3000;

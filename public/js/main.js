@@ -58,6 +58,12 @@ let temp_room =null;
 let temp_beer =null;
 let temp_outdoor =null;
 
+// function targetTemp(date, temp) {
+//   this.x = date;
+//   this.y = temp;
+// }
+// var temp_target = new targetTemp(, );
+
 let temp_target = [{
   x: '',
   y: 20
@@ -66,16 +72,14 @@ let temp_target = [{
   y: 20
 }];
 
-fetch('/temp/room')
+
+fetch('/api/temp/room')
 .then(function(response) {
   return response.json();
 })
 .then(function(data) {
   temp_room = data
-  // Set Target temp object
-  temp_target[0].x = data[0].x;
-  temp_target[1].x = data[data.length -1].x;
-  console.log(temp_target);
+
   dataset = {
     fill: true,
     label: 'Room temp',
@@ -88,6 +92,15 @@ fetch('/temp/room')
   };
   myLineChart.data.datasets.push(dataset);
   myLineChart.update();
+});
+
+
+function drawTargetTemp(data) {
+  console.log('I was called');
+  console.log(data);
+  // Set Target temp object
+  temp_target[0].x = data[0].x;
+  temp_target[1].x = data[data.length -1].x;
 
   targetDataset = {
     fill: false,
@@ -101,9 +114,9 @@ fetch('/temp/room')
   };
   myLineChart.data.datasets.push(targetDataset);
   myLineChart.update();
-});
+}
 
-fetch('/temp/beer')
+fetch('/api/temp/beer')
 .then(function(response) {
   return response.json();
 })
@@ -121,13 +134,13 @@ fetch('/temp/beer')
   };
   myLineChart.data.datasets.push(dataset);
   myLineChart.update();
+  drawTargetTemp(data);
+  
   let current_temp = temp_beer[temp_beer.length -1].y;
-  console.log(current_temp);
-  //let current_temp = document.getElementById('current_temp');
   document.getElementById('current-temp').innerHTML = `Current temp: ${current_temp}`;
 });
 
-fetch('/temp/outdoor')
+fetch('/api/temp/outdoor')
 .then(function(response) {
   return response.json();
 })
@@ -153,7 +166,8 @@ function getDataBetween(from, to){
   myLineChart.data.datasets.pop(temp_room);
   myLineChart.data.datasets.pop(temp_beer);
   myLineChart.data.datasets.pop(temp_outdoor);
-  fetch('/temp/room/' + from + '/' + to)
+  myLineChart.data.datasets.pop(temp_target);
+  fetch('/api/temp/room/' + from + '/' + to)
   .then(function(response) {
     return response.json();
   })
@@ -171,12 +185,13 @@ function getDataBetween(from, to){
     myLineChart.data.datasets.push(dataset);
     myLineChart.update();
   });
-
-  fetch('/temp/beer/' + from + '/' + to)
+  
+  fetch('/api/temp/beer/' + from + '/' + to)
   .then(function(response) {
     return response.json();
   })
   .then(function(data) {
+    console.log(data);
     dataset = {
       fill: false,
       label: 'Beer temp',
@@ -187,12 +202,13 @@ function getDataBetween(from, to){
       borderWidth: 1.5,
       pointHitRadius: 7.5
     };
-
+    
+    drawTargetTemp(data);
     myLineChart.data.datasets.push(dataset);
     myLineChart.update();
   });
-
-  fetch('/temp/outdoor/' + from + '/' + to)
+  
+  fetch('/api/temp/outdoor/' + from + '/' + to)
   .then(function(response) {
     return response.json();
   })
