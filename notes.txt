@@ -1,0 +1,20 @@
+// Create migration
+cd into the folder you want to create the migration file or it will create the migrations folder for you
+knex migrate: make beer_list_table
+
+// Create seeds
+knex seed:make 01_beers
+
+// migrate
+knex migrate:latest
+
+// seed
+knex seed:run
+
+// 
+knex migrate:rollback
+
+
+
+/// Stopped when i noticed i need to add some path for the migrations
+Following this tutorial for ithttps://www.youtube.com/watch?v=EGLi3QQv8bI&index=4&list=PL7sCSgsRZ-smPRSrim4bX5TQfRue1jKfw

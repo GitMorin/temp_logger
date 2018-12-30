@@ -27,8 +27,6 @@ router.get('/temp/outdoor', function(req, res){
   })
 })
 
-//'2007-02-07' AND '2007-02-15';
-
 // Between dates
 router.get('/temp/room/:from/:to', function(req, res){
   toDate = req.params.to
