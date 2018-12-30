@@ -27,6 +27,14 @@ router.get('/temp/outdoor', function(req, res){
   })
 })
 
+// Get Beer list
+router.get('/beerlist', function(req, res){
+  knex.select().table('beers')
+  .then(function(beers){
+    res.json(beers)
+  })
+})
+
 // Between dates
 router.get('/temp/room/:from/:to', function(req, res){
   toDate = req.params.to

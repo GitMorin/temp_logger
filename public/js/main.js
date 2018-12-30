@@ -57,6 +57,7 @@ var myLineChart = new Chart(ctx, {
 let temp_room =null;
 let temp_beer =null;
 let temp_outdoor =null;
+let beer_list = null;
 
 // function targetTemp(date, temp) {
 //   this.x = date;
@@ -72,6 +73,34 @@ let temp_target = [{
   y: 20
 }];
 
+function beerinfo(beerName) {
+  let beerObj = beer_list.filter(function(beer){
+    return beer.name === beerName;
+  })[0];
+  console.log(beerObj);
+};
+
+// Populate beer list to dropdown
+fetch('/api/beerlist')
+.then(function(response){
+  return response.json();
+})
+.then(function(beerlist) {
+  beer_list = beerlist;
+  beerlist.forEach(beer => {
+    // Append beer to dropdown list
+    let beerList = document.getElementById("beer-list");
+    const beerElement = document.createElement('a');
+    beerElement.setAttribute("class", "dropdown-item");
+    beerElement.setAttribute("href", "#");
+    beerElement.textContent = beer.name;
+    beerElement.addEventListener('click', function(e){
+      let beer_clicked = e.target.innerText
+      beerinfo(beer_clicked);
+    })
+    beerList.appendChild(beerElement);
+  });
+});
 
 fetch('/api/temp/room')
 .then(function(response) {

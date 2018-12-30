@@ -15,6 +15,6 @@ knex seed:run
 knex migrate:rollback
 
 
-
-/// Stopped when i noticed i need to add some path for the migrations
-Following this tutorial for ithttps://www.youtube.com/watch?v=EGLi3QQv8bI&index=4&list=PL7sCSgsRZ-smPRSrim4bX5TQfRue1jKfw
+1. Fill dropdown list with beers from db - (x)
+2. Get clicked element in beerlist and check what find the name in the beer_list array to get fermentation start/end date (x)
+3. Use the beer object return to use the fermentation start and end date to plot the graph with the data

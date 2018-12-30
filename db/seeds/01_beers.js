@@ -5,8 +5,8 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('beers').insert([
-        {name: 'First Beer', is_active: true, start_ferment: '2018-12-14', end_ferment: '2018-12-24 16:00'},
-        {name: 'First Beer', is_active: false, start_ferment: '2018-12-03', end_ferment: '2018-09-30'}
+        {name: '048 King of Korn v2', is_active: false, start_ferment: '2018-12-14', end_ferment: '2018-12-24 16:00'},
+        {name: '049 Rye Pale Ale', is_active: true, start_ferment: '2018-12-30 22:00'}
       ]);
     });
 };
