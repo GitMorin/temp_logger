@@ -17,4 +17,10 @@ knex migrate:rollback
 
 1. Fill dropdown list with beers from db - (x)
 2. Get clicked element in beerlist and check what find the name in the beer_list array to get fermentation start/end date (x)
-3. Use the beer object return to use the fermentation start and end date to plot the graph with the data
+3. Use the beer object return to use the fermentation start and end date to plot the graph with the data (x)
+6. Update target temp ( )
+4. Fix x axis tick line ( )
+5. Set default graph to be the active beer or the last on if none is active ( )
+
+TO find: 
+How to include moduel library on the fron end?

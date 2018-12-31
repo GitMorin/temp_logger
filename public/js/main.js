@@ -65,6 +65,7 @@ let beer_list = null;
 // }
 // var temp_target = new targetTemp(, );
 
+// Template to be used for target temperature, can probably be made smarter
 let temp_target = [{
   x: '',
   y: 20
@@ -77,7 +78,18 @@ function beerinfo(beerName) {
   let beerObj = beer_list.filter(function(beer){
     return beer.name === beerName;
   })[0];
+  let fermentTo = null;
   console.log(beerObj);
+  if (beerObj.end_ferment == null) {
+    fermentTo = moment().format('YYYY-MM-DD h:mm');
+  } else {
+    fermentTo = beerObj.end_ferment;
+  }
+  console.log(fermentTo);
+  getDataBetween(beerObj.start_ferment, fermentTo);
+  temp_target[0].y = beerObj.target_temp;
+  temp_target[1].y = beerObj.target_temp;
+  //console.log(temp_target[1].y = beerObj.temp_target)
 };
 
 // Populate beer list to dropdown
@@ -125,8 +137,6 @@ fetch('/api/temp/room')
 
 
 function drawTargetTemp(data) {
-  console.log('I was called');
-  console.log(data);
   // Set Target temp object
   temp_target[0].x = data[0].x;
   temp_target[1].x = data[data.length -1].x;
