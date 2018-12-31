@@ -74,24 +74,16 @@ let temp_target = [{
   y: 20
 }];
 
+// Find object in beer list with beer name of X. Returning object
 function beerinfo(beerName) {
   let beerObj = beer_list.filter(function(beer){
     return beer.name === beerName;
   })[0];
-  let fermentTo = null;
   console.log(beerObj);
-  if (beerObj.end_ferment == null) {
-    fermentTo = moment().format('YYYY-MM-DD h:mm');
-  } else {
-    fermentTo = beerObj.end_ferment;
-  }
-  console.log(fermentTo);
-  getDataBetween(beerObj.start_ferment, fermentTo);
-  temp_target[0].y = beerObj.target_temp;
-  temp_target[1].y = beerObj.target_temp;
-  //console.log(temp_target[1].y = beerObj.temp_target)
+  getFermentationDates(beerObj);
 };
 
+// Check if beer is in active fermentation. If more than one beer is active return the latest one
 function findAndAddActiveBeer(beerlist) {
   let activeBeers = beerlist.filter(function(beer){
     return beer.is_active === true
@@ -99,17 +91,22 @@ function findAndAddActiveBeer(beerlist) {
   orderedBeer = activeBeers.sort(function(a,b){
     return Date.parse(b.start_ferment) - Date.parse(a.start_ferment);
   });
-
-  // This can be refactored
-  if (orderedBeer[0].end_ferment == null) {
-    fermentTo = moment().format('YYYY-MM-DD h:mm');
-  } else {
-    fermentTo = orderedBeer[0].end_ferment;
-  }
-  getDataBetween(orderedBeer[0].start_ferment, fermentTo);
-  temp_target[0].y = orderedBeer[0].target_temp;
-  temp_target[1].y = orderedBeer[0].target_temp;
+  getFermentationDates(orderedBeer[0])
 }
+
+// If beer does not have end fermentation date yet (due to active fermentation) 
+// Instead use current time to call the getDataBwetween(dates) function that will be used in graph
+function getFermentationDates(beer) {
+  if (beer.end_ferment == null) {
+    fermentTo = moment().format('YYYY-MM-DD HH:mm');
+  } else {
+    fermentTo = beer.end_ferment;
+  }
+  getDataBetween(beer.start_ferment, fermentTo);
+  temp_target[0].y = beer.target_temp;
+  temp_target[1].y = beer.target_temp;
+}
+
 
 // Populate beer list to dropdown
 fetch('/api/beerlist')
@@ -250,7 +247,6 @@ function getDataBetween(from, to){
     return response.json();
   })
   .then(function(data) {
-    console.log(data);
     dataset = {
       fill: false,
       label: 'Beer temp',

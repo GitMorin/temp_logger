@@ -3,29 +3,29 @@ const router = express.Router();
 const knex = require('../db/knex');
 const path = require('path');
 
-const startDate = '2018-12-09 18:00'
+//const startDate = '2018-12-09 18:00'
 // routes
 
-router.get('/temp/room', function(req, res){
-  knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_room where timestamp > ?", [startDate])
-  .then(function(temps){
-    res.json(temps.rows)
-  })
-})
+// router.get('/temp/room', function(req, res){
+//   knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_room where timestamp > ?", [startDate])
+//   .then(function(temps){
+//     res.json(temps.rows)
+//   })
+// })
 
-router.get('/temp/beer', function(req, res){
-  knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_beer where timestamp > ?", [startDate])
-  .then(function(temps){
-    res.json(temps.rows)
-  })
-})
+// router.get('/temp/beer', function(req, res){
+//   knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_beer where timestamp > ?", [startDate])
+//   .then(function(temps){
+//     res.json(temps.rows)
+//   })
+// })
 
-router.get('/temp/outdoor', function(req, res){
-  knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_openweather where timestamp > ?", [startDate])
-  .then(function(temps){
-    res.json(temps.rows)
-  })
-})
+// router.get('/temp/outdoor', function(req, res){
+//   knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_openweather where timestamp > ?", [startDate])
+//   .then(function(temps){
+//     res.json(temps.rows)
+//   })
+// })
 
 // Get Beer list
 router.get('/beerlist', function(req, res){

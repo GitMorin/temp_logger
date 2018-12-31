@@ -20,9 +20,10 @@ knex migrate:rollback
 3. Use the beer object return to use the fermentation start and end date to plot the graph with the data (x)
 4. Update target temp (X)
 5. Set default graph to be the active beer or the last on if none is active (X)
-6. Refactor number 5 and remove redundant code and routes
-
-4. Fix x axis tick line ( )
+6. Refactor number 5 and remove redundant code and routes ( )
+7. Update current fermenting beer and temp based on drop down ( )
+8. Date picker difficult to work on phone, see what can be done.. ( )
+4. Fix x axis tick line to show date instead of time. (and/or) ( )
 
 TO find: 
 How to include moduel library on the fron end?
