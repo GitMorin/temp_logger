@@ -131,28 +131,6 @@ fetch('/api/beerlist')
   });
 });
 
-// fetch('/api/temp/room')
-// .then(function(response) {
-//   return response.json();
-// })
-// .then(function(data) {
-//   temp_room = data
-
-//   dataset = {
-//     fill: true,
-//     label: 'Room temp',
-//     data: temp_room,
-//     borderColor: 'rgba(51, 42, 207, 0.3)',
-//     backgroundColor: 'rgba(51, 42, 207, 0.10)',
-//     pointRadius: .8,
-//     borderWidth: .5,
-//     pointHitRadius: 7.5,
-//   };
-//   myLineChart.data.datasets.push(dataset);
-//   myLineChart.update();
-// });
-
-
 function drawTargetTemp(data) {
   // Set Target temp object
   temp_target[0].x = data[0].x;
@@ -171,52 +149,6 @@ function drawTargetTemp(data) {
   myLineChart.data.datasets.push(targetDataset);
   myLineChart.update();
 }
-
-// fetch('/api/temp/beer')
-// .then(function(response) {
-//   return response.json();
-// })
-// .then(function(data) {
-//   temp_beer = data
-//   dataset = {
-//     fill: false,
-//     label: 'Beer temp',
-//     data: temp_beer,
-//     borderColor: 'rgba(207, 108, 42, 0.75)',
-//     backgroundColor: 'rgba(161, 84, 33, 0.75)',
-//     pointRadius: 1,
-//     borderWidth: 1.5,
-//     pointHitRadius: 7.5
-//   };
-//   myLineChart.data.datasets.push(dataset);
-//   myLineChart.update();
-//   drawTargetTemp(data);
-  
-//   let current_temp = temp_beer[temp_beer.length -1].y;
-//   document.getElementById('current-temp').innerHTML = `Current temp: ${current_temp}`;
-// });
-
-// fetch('/api/temp/outdoor')
-// .then(function(response) {
-//   return response.json();
-// })
-// .then(function(data) {
-//   temp_outdoor = data
-//   dataset = {
-//     fill: true,
-//     label: 'Outdoor temp',
-//     data: temp_outdoor,
-//     borderColor: 'rgba(62, 161, 12, 0.9)',    
-//     backgroundColor: 'rgba(62, 161, 12, 0.1)',
-//     pointRadius: 0,
-//     borderWidth: 1.75,
-//     pointHitRadius: 7.5
-//   };
-//   myLineChart.data.datasets.push(dataset);
-//   myLineChart.update();
-// });
-
-
 
 function getDataBetween(from, to){
   myLineChart.data.datasets.pop(temp_room);
@@ -285,8 +217,8 @@ function getDataBetween(from, to){
 
 $(function() {
   $('input[name="daterange"]').daterangepicker({
-    opens: 'right',
-    drops: 'up',
+    opens: 'left',
+    drops: 'down',
   }, function(start, end, label) {
     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
     let from  = start.format('YYYY-MM-DD');
