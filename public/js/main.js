@@ -12,6 +12,7 @@ var myLineChart = new Chart(ctx, {
     },
     scales: {
       xAxes: [{
+        distribution: 'linear', 
         type: 'time',
         time: {
           parser: timeFormat,
@@ -79,19 +80,30 @@ function beerinfo(beerName) {
   let beerObj = beer_list.filter(function(beer){
     return beer.name === beerName;
   })[0];
-  console.log(beerObj);
   getFermentationDates(beerObj);
+  updateBeerDisplayInformation(beerObj);
 };
+
+function updateBeerDisplayInformation(beer) {
+  let currentBeer = document.querySelector("#current-beer strong");
+  if (beer.is_active === true) {
+    currentBeer.textContent = ` ${beer.name} - Currently fermenting`;
+  } else {
+    // currentBeer = document.querySelector("#current-beer");
+    // currentBeer = document.querySelector("#current-beer");
+    currentBeer.textContent = ` ${beer.name} - Is complete`;
+  }
+}
 
 // Check if beer is in active fermentation. If more than one beer is active return the latest one
 function findAndAddActiveBeer(beerlist) {
-  let activeBeers = beerlist.filter(function(beer){
-    return beer.is_active === true
-  });
-  orderedBeer = activeBeers.sort(function(a,b){
+  // May not need this anymore. Only need the last beer
+  orderedBeer = beerlist.sort(function(a,b){
     return Date.parse(b.start_ferment) - Date.parse(a.start_ferment);
   });
-  getFermentationDates(orderedBeer[0])
+  // Display the beer name - this function need to be smarter to state if the beer is active o not..
+  updateBeerDisplayInformation(orderedBeer[0]);
+  getFermentationDates(orderedBeer[0]);
 }
 
 // If beer does not have end fermentation date yet (due to active fermentation) 

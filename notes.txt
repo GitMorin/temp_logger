@@ -21,8 +21,10 @@ knex migrate:rollback
 4. Update target temp (X)
 5. Set default graph to be the active beer or the last on if none is active (X)
 6. Refactor number 5 and remove redundant code and routes (X)
-7. Update current fermenting beer and temp based on drop down ( )
 8. Date picker difficult to work on phone, see what can be done.. (x)
+7. Update current fermenting beer and temp based on drop down ( ) if active.. show current temp
+  Row 94
+  Check what happens if no beers are active. Should show latest one
 4. Fix x axis tick line to show date instead of time. (and/or) ( )
 
 TO find: 
