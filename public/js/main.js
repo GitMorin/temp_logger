@@ -103,14 +103,22 @@ fetch('/api/beerlist')
   // Append beer to dropdown list
   beerList.forEach(beer => {
     let beerList = document.getElementById("beer-list");
-    // const spanElement = document.createElement('span');
-    // spanElement.setAttribute("class","circle");
+    //const icon = document.createElement('i');
     const beerElement = document.createElement('a');
+
     beerElement.setAttribute("class", "dropdown-item");
     beerElement.setAttribute("href", "#");
+    beerElement.setAttribute("beer", beer.name);
+    beerElement.innerHTML = beer.name;
+
+    if (beer.is_active == true) {
+      beerElement.innerHTML = beer.name + ' ' +'<i class="fas fa-flask"></i>';
+    } else {
+      beerElement.innerHTML = beer.name + ' ' +'<i class="fas fa-beer"></i>';
+    }
 
     beerElement.addEventListener('click', function(e){
-      let beer_clicked = e.target.innerText
+      let beer_clicked = e.target.getAttribute("beer");
       // set global variable with the beer to display
       displaying_beer = getBeerObject(beer_clicked);
       updateBeerTitle(displaying_beer);
