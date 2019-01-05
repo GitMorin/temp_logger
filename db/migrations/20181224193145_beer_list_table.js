@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
     table.string('name').notNullable();
     table.boolean('is_active').notNullable().default(true);
     table.integer('target_temp');
+    table.string('sensor');
     table.timestamp('start_ferment');
     table.timestamp('end_ferment');
   })

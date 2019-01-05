@@ -24,13 +24,16 @@ router.get('/temp/room/:from/:to', function(req, res){
   })
 })
 
-router.get('/temp/beer/:from/:to', function(req, res){
+router.get('/temp/beer/:sensor/:from/:to', function(req, res){
+  console.log(req.params.sensor);
+  console.log(req.params.from);
+  console.log(req.params.to);
   toDate = req.params.to
   if (req.params.from == req.params.to) {
     //padd extra hours to end of day..
     toDate = `${req.params.to} 23:00`
   }
-  knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_beer where timestamp BETWEEN ? AND ?", [req.params.from, toDate])
+  knex.raw("select TO_CHAR(timestamp, 'YYYY-MM-dd HH24:MI:SS') as x, temperature AS y from temp_beer where sensor=? AND (timestamp BETWEEN ? AND ?)", [req.params.sensor,req.params.from, toDate])
   .then(function(temps){
     res.json(temps.rows)
   })

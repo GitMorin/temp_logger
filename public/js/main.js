@@ -59,7 +59,6 @@ let temp_room =null;
 let temp_beer =null;
 let temp_outdoor =null;
 let current_temp;
-//let beerObject;
 let beer_list;
 let displaying_beer
 
@@ -87,31 +86,40 @@ fetch('/api/beerlist')
   // set global beer_list variable
   beer_list = beerList
   latestBeer = getLatestStartedBeer(beerList);
+  console.log(latestBeer );
   // set latest beer to global
-  displaying_beer = latestBeer
+  displaying_beer = latestBeer;
   updateBeerTitle(latestBeer);
 
   fermentTo = getEndFermentationDate(latestBeer);
-  plotDataBetween(latestBeer.start_ferment, fermentTo);
+  plotDataBetween(latestBeer.sensor, latestBeer.start_ferment, fermentTo);
   
-  // set temp target for latest beer
+  // set target temp for latest beer
   temp_target[0].y = latestBeer.target_temp;
   temp_target[1].y = latestBeer.target_temp;
+  temp_target[0].x = latestBeer.start_ferment;
+  temp_target[1].x = fermentTo;
 
   // Append beer to dropdown list
   beerList.forEach(beer => {
     let beerList = document.getElementById("beer-list");
+    // const spanElement = document.createElement('span');
+    // spanElement.setAttribute("class","circle");
     const beerElement = document.createElement('a');
     beerElement.setAttribute("class", "dropdown-item");
     beerElement.setAttribute("href", "#");
-    beerElement.textContent = beer.name;
+
     beerElement.addEventListener('click', function(e){
       let beer_clicked = e.target.innerText
       // set global variable with the beer to display
       displaying_beer = getBeerObject(beer_clicked);
       updateBeerTitle(displaying_beer);
       fermentTo = getEndFermentationDate(displaying_beer);
-      plotDataBetween(displaying_beer.start_ferment, fermentTo);
+      temp_target[0].y = displaying_beer.target_temp;
+      temp_target[1].y = displaying_beer.target_temp;
+      temp_target[0].x = displaying_beer.start_ferment;
+      temp_target[1].x = fermentTo;
+      plotDataBetween(displaying_beer.sensor, displaying_beer.start_ferment, fermentTo);
     })
     beerList.appendChild(beerElement);
   });
@@ -158,36 +166,37 @@ function getFermentationDates(beer) {
     fermentTo = beer.end_ferment;
   }
   getDataBetween(beer.start_ferment, fermentTo);
+  // update temp_target object with target temp for beer
   temp_target[0].y = beer.target_temp;
   temp_target[1].y = beer.target_temp;
 
 }
 
-function plotDataBetween(from, to){
-  myLineChart.data.datasets.pop(temp_room);
+function plotDataBetween(sensor, from, to){
+  //myLineChart.data.datasets.pop(temp_room);
   myLineChart.data.datasets.pop(temp_beer);
   myLineChart.data.datasets.pop(temp_outdoor);
   myLineChart.data.datasets.pop(temp_target);
-  fetch('/api/temp/room/' + from + '/' + to)
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(data) {
-    dataset = {
-      fill: true,
-      label: 'Room temp',
-      data: data,
-      borderColor: 'rgba(51, 42, 207, 0.3)',
-      backgroundColor: 'rgba(51, 42, 207, 0.10)',
-      pointRadius: .8,
-      borderWidth: .5,
-      pointHitRadius: 7.5,
-    };
-    myLineChart.data.datasets.push(dataset);
-    myLineChart.update();
-  });
+  // fetch('/api/temp/room/' + from + '/' + to)
+  // .then(function(response) {
+  //   return response.json();
+  // })
+  // .then(function(data) {
+  //   dataset = {
+  //     fill: true,
+  //     label: 'Room temp',
+  //     data: data,
+  //     borderColor: 'rgba(51, 42, 207, 0.3)',
+  //     backgroundColor: 'rgba(51, 42, 207, 0.10)',
+  //     pointRadius: .8,
+  //     borderWidth: .5,
+  //     pointHitRadius: 7.5,
+  //   };
+  //   myLineChart.data.datasets.push(dataset);
+  //   myLineChart.update();
+  // });
   
-  fetch('/api/temp/beer/' + from + '/' + to)
+  fetch('/api/temp/beer/' + sensor + '/' + from + '/' + to)
   .then(function(response) {
     return response.json();
   })
@@ -210,9 +219,9 @@ function plotDataBetween(from, to){
     } else {
       currentTemp.textContent = '';
     }
-    // set temp target
-    temp_target[0].x = data[0].x;
-    temp_target[1].x = data[data.length -1].x;
+    // set date on temp target temp target
+    // temp_target[0].x = data[0].x;
+    // temp_target[1].x = data[data.length -1].x;
     drawTargetTemp(data);
     myLineChart.data.datasets.push(dataset);
     myLineChart.update();
@@ -238,10 +247,7 @@ function plotDataBetween(from, to){
   });
 };
 
-function drawTargetTemp(data) {
-  // Set Target temp date
-  temp_target[0].x = data[0].x;
-  temp_target[1].x = data[data.length -1].x;
+function drawTargetTemp() {
 
   targetDataset = {
     fill: false,
@@ -267,6 +273,6 @@ $(function() {
     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
     let from  = start.format('YYYY-MM-DD');
     let to = end.format('YYYY-MM-DD')
-    plotDataBetween(from, to);
+    plotDataBetween(sensor, from, to);
   });
 });
