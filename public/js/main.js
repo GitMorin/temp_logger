@@ -172,7 +172,7 @@ function getFermentationDates(beer) {
   } else {
     fermentTo = beer.end_ferment;
   }
-  getDataBetween(beer.start_ferment, fermentTo);
+  // getDataBetween(beer.start_ferment, fermentTo);
   // update temp_target object with target temp for beer
   temp_target[0].y = beer.target_temp;
   temp_target[1].y = beer.target_temp;
@@ -208,6 +208,13 @@ function plotDataBetween(sensor, from, to){
     return response.json();
   })
   .then(function(data) {
+    // sort data by date if it comes out wrong from the db
+    data.sort(function(a,b){
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      return new Date(a.x) - new Date(b.x);
+    });
+    //console.log(sorted);
     dataset = {
       fill: false,
       label: 'Beer temp',
