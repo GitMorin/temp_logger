@@ -51,4 +51,16 @@ router.get('/temp/outdoor/:from/:to', function(req, res){
   })
 })
 
+router.post('/temp', function(req, res){
+  console.log(req.body);
+  //console.log(req.body.sensor,req.body.temp)
+  //knex.raw("insert into temp_beer(temperature, timestamp, sensor) values(?, ?, ?)", [15, knex.fn.now(), 't3'])
+  knex.raw("insert into temp_beer(temperature, timestamp, sensor) values(?, ?, ?)", [req.body.temp, knex.fn.now(), req.body.sensor])
+  //res.end(req.body)
+  .then( function (result) {
+    res.json({ success: true, message: 'ok' });
+    });
+  //res.end;
+})
+
 module.exports = router;

@@ -86,7 +86,6 @@ fetch('/api/beerlist')
   // set global beer_list variable
   beer_list = beerList
   latestBeer = getLatestStartedBeer(beerList);
-  console.log(latestBeer );
   // set latest beer to global
   displaying_beer = latestBeer;
   updateBeerTitle(latestBeer);
@@ -223,7 +222,8 @@ function plotDataBetween(sensor, from, to){
     current_temp = data[data.length -1].y;
     const currentTemp = document.getElementById("current-temp");
     if (displaying_beer.is_active == true) {
-      currentTemp.textContent = current_temp;
+      //currentTemp.textContent = current_temp + ' C';
+      currentTemp.textContent =  `@ ${current_temp} C`;
     } else {
       currentTemp.textContent = '';
     }
