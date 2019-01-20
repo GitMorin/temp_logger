@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <% include ../partials/head %>
+
+  <body>
+
+  <% include ../partials/nav %>
+
+  <div class="container">
+    <div class="chart">
+      <h5 class="text-center">Temperature logger2: <span id="current-beer" class="sub-title">Beer: <strong>Unknown</strong> </span><span id="current-temp" class="sub-title"></span></span></h5>
+      <canvas id="myChart"></canvas>
+    </div>
+    <div class="dropdown">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        Select a beer
+      </button>
+      <div class="dropdown-menu" id="beer-list">
+        <!-- <a class="dropdown-item" href="#">Link 1</a> -->
+      </div>
+    </div>
+    Select to plot data between dates: <input type="text" name="daterange" value="12/03/2018 - 12/09/2018" />  
+  </div>
+
+  <% include ../partials/scripts %>
+
+</body>
+</html>

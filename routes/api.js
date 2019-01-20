@@ -61,6 +61,29 @@ router.post('/temp', function(req, res){
     res.json({ success: true, message: 'ok' });
     });
   //res.end;
+});
+
+// New beer
+router.post('/beer/new', function(req, res){
+  knex('beers').insert(req.body)
+  .then(function() {
+    res.json({ success: true, message: 'ok' });
+  });
+})
+
+// Update Beer
+router.put('/beer/:id', function(req, res){
+  // update beer
+  knex('beers').where('id', req.params.id)
+  .update(req.body)
+  // get beer
+  .then(function(){
+    knex.select()
+      .from('beers')
+      .then(function(beers){
+        res.send(beers);
+      })
+  })
 })
 
 module.exports = router;
