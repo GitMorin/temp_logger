@@ -11,6 +11,11 @@ router.get('/beerlist', function(req, res){
   })
 })
 
+router.get('/new', function(req, res){
+  //res.file('index.html');
+  res.render('pages/newbeer');
+})
+
 // Between dates
 router.get('/temp/room/:from/:to', function(req, res){
   toDate = req.params.to
