@@ -5,25 +5,88 @@
 
 <body>
   <div class="wrapper">
+    <!-- <div class="container-fluid"> -->
+    <!-- Toggle sidebar -->
+    <!-- </div> -->
     <% include ../partials/nav %>
 
+
     <!-- Main content -->
-    <div id="content" class="container">
+    <div id="content">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
 
-      <div class="d-flex flex-row">
-        <!-- Toggle sidebar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <div class="container">
-            <button type="button" id="sidebarCollapse" class="btn btn-info">
-              <i class="fas fa-align-left"></i>
-              <span>Toggle Sidebar</span>
-            </button>
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-align-left"></i>
+            <span>Toggle Sidebar</span>
+          </button>
+          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Page</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Page</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Page</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Page</a>
+              </li>
+            </ul>
           </div>
-        </nav>
+        </div>
+      </nav>
 
+      <div class="container col-8">
+      <form  action="/api/beer/new" method="post">
+        <div class="form-group">
+          <label for="beerName">Beer Name</label>
+          <input type="text" class="form-control" id="beerName" placeholder="Enter beer name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="targetTemp">Target Temp</label>
+          <input type="text" class="form-control" id="targetTemp" placeholder="Enter target temp" name="target_temp">
+        </div>
+        <select class="custom-select" size="3" required name="sensor">
+          <option selected>Select Sensor</option>
+          <option value="t1">T1</option>
+          <option value="t2">T2</option>
+        </select>
+        <div class="d-flex">
+          <div class="form-group mt-3 pr-3">
+            <label for="date">Example date</label>
+            <input type="date" id="date" / name="start_ferment">
+          </div>
+          <div class="form-group mt-3">
+            <label for="time">Time</label>
+            <input type="time" id="time" / name="start_ferment">
+          </div>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" id="is_active" value="True" name="is_active"
+            readonly checked>
+          <label class="form-check-label" for="is_active">
+            Active fermentation True (Default)
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
+    <div>
+      <h1>Something else</h1>
+    </div>
 
     </div> <!-- End Main content -->
-  </div>   <!-- End Wrapper -->
+  </div> <!-- End Wrapper -->
   <% include ../partials/scripts %>
 
 </body>

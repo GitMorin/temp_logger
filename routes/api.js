@@ -70,9 +70,11 @@ router.post('/temp', function(req, res){
 
 // New beer
 router.post('/beer/new', function(req, res){
+  console.log(req.body);
   knex('beers').insert(req.body)
   .then(function() {
-    res.json({ success: true, message: 'ok' });
+    //res.json({ success: true, message: 'ok' });
+    res.redirect('/')
   });
 })
 
