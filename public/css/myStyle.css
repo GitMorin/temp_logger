@@ -24,6 +24,13 @@
 /* #temp-title {
    margin-top: 15px;
 } */
+.brew-info {
+    width: 20%
+}
+
+.no-line-height{
+    line-height: 1rem;
+}
 
 #sidebar.active {
   margin-left: -200px;

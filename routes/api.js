@@ -78,6 +78,17 @@ router.post('/beer/new', function(req, res){
   });
 })
 
+// Show all beer
+router.get('/beer/list', function(req, res){
+  knex.select().table('beers')
+  .then(function(beers){
+    //res.send({ beers: beers });
+    res.render('pages/beerlist', { beers: beers })
+    })
+  //res.render('pages/beerlist');
+})
+
+
 // Update Beer
 router.put('/beer/:id', function(req, res){
   // update beer
